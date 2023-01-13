@@ -1,18 +1,22 @@
-import { useState, useEffect } from 'react'
 import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
-import Card from '../components/Card'
-import Layout from '../components/Layout'
 
+import Layout from '../components/Layout'
+import Card from '../components/Card'
+
+import { useTitle } from '../utils/hooks/customHooks'
 import { DataType } from '../utils/pokemon'
 
-const Home = () => {
-  const navigate = useNavigate()
-  const [data, setData] = useState<DataType[]>([])
-  const [nextPoke, setNextPoke] = useState<string>("")
-  const [previousPoke, setPreviousPoke] = useState<string>("")
 
+const Home = () => {
+  const [previousPoke, setPreviousPoke] = useState<string>("")
+  const [nextPoke, setNextPoke] = useState<string>("")
+  const [data, setData] = useState<DataType[]>([])
+  useTitle("Home - Pokemon App")
+  const navigate = useNavigate()
+  
   function fetchData() {
     axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`)
       .then((data) => {

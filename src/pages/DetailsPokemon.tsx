@@ -1,24 +1,26 @@
-import { useState, useEffect, FC } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
+import CardDetail from '../components/CardDetail'
+import Button from '../components/Button'
 import Layout from '../components/Layout'
 import Card from '../components/Card'
-import Button from '../components/Button'
-import CardDetail from '../components/CardDetail'
+
 
 import { DetailsType, AbilitiesType, MovesType, StatsType } from '../utils/pokemon'
+import { useTitle } from '../utils/hooks/customHooks'
 
 const DetailsPokemon = () => {
-    const { id_pokemon, name_pokemon } = useParams()
+    const [abilities, setAbilities] = useState<AbilitiesType[]>([])
+    const [baseStat, setBaseStat] = useState<StatsType[]>([])
     const [namePoke, setNamePoke] = useState<string>("")
+    const [data, setData] = useState<DetailsType[]>([])
+    const [moves, setMoves] = useState<MovesType[]>([])
+    const { id_pokemon, name_pokemon } = useParams()
     const [weight, setWeight] = useState<string>("")
     const [height, setHeight] = useState<string>("")
-    const [data, setData] = useState<DetailsType[]>([])
-    const [baseStat, setBaseStat] = useState<StatsType[]>([])
-    const [abilities, setAbilities] = useState<AbilitiesType[]>([])
-    const [moves, setMoves] = useState<MovesType[]>([])
-
+    useTitle(`Details ${name_pokemon}- Pokemon App`)
     const navigate = useNavigate()
 
     function fetchData() {
@@ -74,7 +76,7 @@ const DetailsPokemon = () => {
                             <div className='mb-5'>
                                 <p className="text-left text-black text-xs md:text-md lg:text-lg font-semibold capitalize">{data.stat.name}</p>
                                 <div className='h-1 w-full bg-gray-300'>
-                                    <div className="h-1 bg-blue-500 text-black text-xs md:text-md lg:text-lg font-semibold" style={{ width: `${data.base_stat >= 100 ? ("100"):(data.base_stat)}%` }}>{data.base_stat}</div>
+                                    <div className="h-1 bg-blue-500 text-black text-xs md:text-md lg:text-lg font-semibold" style={{ width: `${data.base_stat >= 100 ? ("100") : (data.base_stat)}%` }}>{data.base_stat}</div>
                                 </div>
                             </div>
                         ))

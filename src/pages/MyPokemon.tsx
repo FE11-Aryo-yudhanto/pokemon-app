@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { GiCancel } from 'react-icons/gi'
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { GiCancel } from 'react-icons/gi'
+import Swal from 'sweetalert2'
 
-import Card from '../components/Card'
 import Layout from '../components/Layout'
+import Card from '../components/Card'
+
+import { useTitle } from '../utils/hooks/customHooks'
 import { DataType } from '../utils/pokemon'
 
 
 const MyPokemon = () => {
     const [datas, setDatas] = useState<DataType[]>([])
+    useTitle("My Pokemon - Pokemon App")
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -30,8 +33,28 @@ const MyPokemon = () => {
         let dupeDatas: DataType[] = datas.slice()
         const filterData = dupeDatas.filter((item) => item.id !== data.id)
         localStorage.setItem("MyPokemon", JSON.stringify(filterData))
-        alert(`Delete ${data.name} from favorite list`);
-        navigate(0)
+        // alert(`Delete ${data.name} from favorite list`);
+        Swal.fire({
+            title: `Are you sure want to delete ${data.name}?`,
+            // text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            confirmButtonText: "Yes",
+            cancelButtonColor: "#d33",
+            cancelButtonText: "No",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                position: "center",
+                icon: "success",
+                text: "Delete successfully",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+            navigate(0)
+          })                    
       }
     return (
         <Layout overflow='auto'>

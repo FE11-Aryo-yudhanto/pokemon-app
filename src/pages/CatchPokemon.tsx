@@ -1,15 +1,19 @@
-import axios from 'axios'
-import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
+import axios from 'axios'
+
 import CardDetail from '../components/CardDetail'
 import Layout from '../components/Layout'
 
+import { useTitle } from '../utils/hooks/customHooks'
 import { ImgType, CatchType } from '../utils/pokemon'
 
 const CatchPokemon = () => {
-    const { name_pokemon } = useParams()
-    const [img, setImg] = useState<ImgType>({})
     const [data, setData] = useState<CatchType>({})
+    const [img, setImg] = useState<ImgType>({})
+    const { name_pokemon } = useParams()
+    useTitle("Catch - Pokemon App")
     const navigate = useNavigate()
 
     function fetchData() {
@@ -36,7 +40,11 @@ const CatchPokemon = () => {
 
     function catchPoke(x: number) {
         if (randomNumber() == 0) {
-            alert("Try Again")
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Try Again",
+              })
         } else {
             handleMyPoke(data)
         }
@@ -48,10 +56,22 @@ const CatchPokemon = () => {
             let parseMyPoke: CatchType[] = JSON.parse(checkExist);
             parseMyPoke.push(data);
             localStorage.setItem("MyPokemon", JSON.stringify(parseMyPoke));
-            alert("Pokemon added to MyPokemon");
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                text: "Pokemon added to MyPokemon",
+                showConfirmButton: false,
+                timer: 2000,
+              })
         } else {
             localStorage.setItem("MyPokemon", JSON.stringify([data]));
-            alert("Pokemon added to MyPokemon");
+            Swal.fire({
+                position: "center",
+                icon: "success",
+                text: "Pokemon added to MyPokemon",
+                showConfirmButton: false,
+                timer: 2000,
+              })
         }
     }
 
@@ -80,7 +100,7 @@ const CatchPokemon = () => {
                             <div className='my-4' onClick={() => catchPoke(randomNumber())}>
                                 <p className='uppercase text-black text-xs md:text-md lg:text-lg font-bold'>catch!</p>
                             </div>
-                            <div className='my-4' onClick={() => navigate("/")}>
+                            <div className='my-4' onClick={() => navigate(-1)}>
                                 <p className='uppercase text-black text-xs md:text-md lg:text-lg font-bold'>run</p>
                             </div>
                         </div>
