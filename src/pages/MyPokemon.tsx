@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { GiCancel } from 'react-icons/gi'
+import { useNavigate } from 'react-router-dom'
 
 import Card from '../components/Card'
 import Layout from '../components/Layout'
 import { DataType } from '../utils/pokemon'
-import { useNavigate } from 'react-router-dom'
+
 
 const MyPokemon = () => {
     const [datas, setDatas] = useState<DataType[]>([])

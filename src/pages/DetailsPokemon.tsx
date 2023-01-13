@@ -7,37 +7,7 @@ import Card from '../components/Card'
 import Button from '../components/Button'
 import CardDetail from '../components/CardDetail'
 
-interface DetailsType {
-    type: {
-        name: string
-    },
-    slot: number
-}
-
-interface ProfilePoke {
-    weight?: number
-    height?: number
-    name?: string
-}
-
-interface AbilitiesType {
-    ability: {
-        name: string
-    }
-}
-
-interface MovesType {
-    move: {
-        name: string
-    }
-}
-
-interface StatsType {
-    base_stat: number
-    stat: {
-        name: string
-    }
-}
+import { DetailsType, AbilitiesType, MovesType, StatsType } from '../utils/pokemon'
 
 const DetailsPokemon = () => {
     const { id_pokemon, name_pokemon } = useParams()
@@ -54,7 +24,6 @@ const DetailsPokemon = () => {
     function fetchData() {
         axios.get(`https://pokeapi.co/api/v2/pokemon/${id_pokemon}`)
             .then((res) => {
-                console.log("data name: ", namePoke)
                 const ability = res.data.abilities
                 const status = res.data.stats
                 const move = res.data.moves

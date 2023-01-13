@@ -16,7 +16,6 @@ const Home = () => {
   function fetchData() {
     axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`)
       .then((data) => {
-        console.log("data: ", data.data)
         const { results, next, previous } = data.data
         setData(results)
         setNextPoke(next)
@@ -36,7 +35,6 @@ const Home = () => {
   function nextPage() {
     axios.get(nextPoke)
       .then((data) => {
-        console.log("data: ", data.data)
         const { results, next, previous } = data.data
         setData(results)
         setNextPoke(next)
@@ -48,7 +46,6 @@ const Home = () => {
   function prevPage() {
     axios.get(previousPoke)
       .then((data) => {
-        console.log("data: ", data.data)
         const { results, next, previous } = data.data
         setData(results)
         setNextPoke(next)

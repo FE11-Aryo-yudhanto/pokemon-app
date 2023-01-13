@@ -4,22 +4,18 @@ import { useNavigate, useParams } from 'react-router-dom'
 import CardDetail from '../components/CardDetail'
 import Layout from '../components/Layout'
 
-import { DataType } from '../utils/pokemon'
-
-interface ImgType {
-    front_default?: string
-}
+import { ImgType, CatchType } from '../utils/pokemon'
 
 const CatchPokemon = () => {
     const { name_pokemon } = useParams()
     const [img, setImg] = useState<ImgType>({})
-    const [data, setData] = useState<DataType[]>([])
+    const [data, setData] = useState<CatchType>({})
     const navigate = useNavigate()
 
     function fetchData() {
         axios.get(`https://pokeapi.co/api/v2/pokemon/${name_pokemon}`)
             .then((res) => {
-                console.log("cek data: ", res.data)
+                console.log("dataa: ", res.data)
                 const { sprites } = res.data
                 setImg(sprites)
                 setData(res.data)
@@ -37,20 +33,19 @@ const CatchPokemon = () => {
             Math.random() < 0.5 ? 0 : 1
         )
     }
-    console.log(randomNumber())
 
     function catchPoke(x: number) {
         if (randomNumber() == 0) {
             alert("Try Again")
         } else {
-            handleFavorite(data)
+            handleMyPoke(data)
         }
     }
 
-    function handleFavorite(data: DataType) {
+    function handleMyPoke(data: CatchType) {
         const checkExist = localStorage.getItem("MyPokemon");
         if (checkExist) {
-            let parseMyPoke: DataType[] = JSON.parse(checkExist);
+            let parseMyPoke: CatchType[] = JSON.parse(checkExist);
             parseMyPoke.push(data);
             localStorage.setItem("MyPokemon", JSON.stringify(parseMyPoke));
             alert("Pokemon added to MyPokemon");
