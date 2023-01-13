@@ -1,5 +1,5 @@
 import { useState, useEffect, FC } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 
 import Layout from '../components/Layout'
@@ -7,9 +7,6 @@ import Card from '../components/Card'
 import Button from '../components/Button'
 import CardDetail from '../components/CardDetail'
 
-interface CSSproperties{
-    style?: React.CSSProperties
-}
 interface DetailsType {
     type: {
         name: string
@@ -20,6 +17,7 @@ interface DetailsType {
 interface ProfilePoke {
     weight?: number
     height?: number
+    name?: string
 }
 
 interface AbilitiesType {
@@ -41,27 +39,32 @@ interface StatsType {
     }
 }
 
-const DetailsPokemon: FC<CSSproperties> = () => {
+const DetailsPokemon = () => {
     const { id_pokemon, name_pokemon } = useParams()
+    const [namePoke, setNamePoke] = useState<string>("")
+    const [weight, setWeight] = useState<string>("")
+    const [height, setHeight] = useState<string>("")
     const [data, setData] = useState<DetailsType[]>([])
     const [baseStat, setBaseStat] = useState<StatsType[]>([])
     const [abilities, setAbilities] = useState<AbilitiesType[]>([])
     const [moves, setMoves] = useState<MovesType[]>([])
-    const [weight, setWeight] = useState<ProfilePoke>({})
-    const [height, setHeight] = useState<ProfilePoke>({})
+
+    const navigate = useNavigate()
 
     function fetchData() {
         axios.get(`https://pokeapi.co/api/v2/pokemon/${id_pokemon}`)
             .then((res) => {
-                console.log("data stats: ", res.data.stats)
+                console.log("data name: ", namePoke)
                 const ability = res.data.abilities
                 const status = res.data.stats
                 const move = res.data.moves
                 const datas = res.data.types
+                const { weight, height, name } = res.data
+                setWeight(weight)
+                setNamePoke(name)
+                setHeight(height)
                 setAbilities(ability)
                 setBaseStat(status)
-                setWeight(res.data)
-                setHeight(res.data)
                 setMoves(move)
                 setData(datas)
             }).catch((err) => {
@@ -72,8 +75,12 @@ const DetailsPokemon: FC<CSSproperties> = () => {
         fetchData()
     }, [])
 
+    function catchHandler(name: string) {
+        navigate(`/catch/${name}`)
+    }
+
     return (
-        <Layout>
+        <Layout overflow='auto'>
             <div className='flex justify-center w-full mt-8'>
                 <h1 className='uppercase font-bold text-xl md:text-2xl text-black'>{name_pokemon}</h1>
             </div>
@@ -92,28 +99,26 @@ const DetailsPokemon: FC<CSSproperties> = () => {
                     </div>
                 </Card>
                 <CardDetail>
+                    <h1 className='text-lg uppercase font-bold text-black'>Pokemon Stats</h1>
                     {
                         baseStat.map((data) => (
                             <div className='mb-5'>
-                                <p className="text-left text-black text-xs md:text-md lg:text-lg font-bold capitalize">{data.stat.name}</p>
+                                <p className="text-left text-black text-xs md:text-md lg:text-lg font-semibold capitalize">{data.stat.name}</p>
                                 <div className='h-1 w-full bg-gray-300'>
-                                    <div className="h-1 bg-blue-500 text-black text-xs md:text-md lg:text-lg font-semibold" style={{width: `${data.base_stat}%`}}>{data.base_stat}</div>
+                                    <div className="h-1 bg-blue-500 text-black text-xs md:text-md lg:text-lg font-semibold" style={{ width: `${data.base_stat >= 100 ? ("100"):(data.base_stat)}%` }}>{data.base_stat}</div>
                                 </div>
-
                             </div>
                         ))
                     }
-
-                    
                 </CardDetail>
             </div>
             <div className='mx-5'>
                 <CardDetail>
                     <div className=''>
                         <h1 className='text-lg uppercase font-bold text-black'>Profile</h1>
-                        <p className="text-left text-black text-xs md:text-md lg:text-lg capitalize ">Name: {name_pokemon}</p>
-                        <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">Weight: {weight.weight}</p>
-                        <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">Height: {height.height}</p>
+                        <p className="text-left text-black text-xs md:text-md lg:text-lg capitalize ">Name: {namePoke}</p>
+                        <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">Weight: {weight}</p>
+                        <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">Height: {height}</p>
                     </div>
                 </CardDetail>
             </div>
@@ -138,7 +143,11 @@ const DetailsPokemon: FC<CSSproperties> = () => {
                 </CardDetail>
             </div>
             <div className='w-full flex justify-center mb-10'>
-                <Button label='Catch!' className='text-white' />
+                <Button
+                    label='Catch!'
+                    className='text-white'
+                    onClick={() => catchHandler(namePoke)}
+                />
             </div>
         </Layout>
     )

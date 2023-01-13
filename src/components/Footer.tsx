@@ -11,7 +11,9 @@ const Footer = () => {
                 </Link>
             </button>
             <button>
-                <TbPokeball size={30} />
+                <Link to={'/mypokemon'}>
+                    <TbPokeball size={30} />
+                </Link>
             </button>
         </footer>
     )

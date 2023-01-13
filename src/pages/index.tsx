@@ -1,24 +1,26 @@
 import { useState, useEffect } from 'react'
-import {AiFillCaretLeft, AiFillCaretRight} from 'react-icons/ai'
+import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import Card from '../components/Card'
 import Layout from '../components/Layout'
 
-interface DataType {
-  name: string
-  url: string
-}
+import { DataType } from '../utils/pokemon'
 
 const Home = () => {
   const navigate = useNavigate()
   const [data, setData] = useState<DataType[]>([])
+  const [nextPoke, setNextPoke] = useState<string>("")
+  const [previousPoke, setPreviousPoke] = useState<string>("")
 
   function fetchData() {
-    axios.get(`https://pokeapi.co/api/v2/pokemon`)
+    axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`)
       .then((data) => {
-        const { results } = data.data
+        console.log("data: ", data.data)
+        const { results, next, previous } = data.data
         setData(results)
+        setNextPoke(next)
+        setPreviousPoke(previous)
       }).catch((err) => {
       })
   }
@@ -31,8 +33,33 @@ const Home = () => {
     navigate(`/detail/${id}/${name}`)
   }
 
+  function nextPage() {
+    axios.get(nextPoke)
+      .then((data) => {
+        console.log("data: ", data.data)
+        const { results, next, previous } = data.data
+        setData(results)
+        setNextPoke(next)
+        setPreviousPoke(previous)
+      }).catch((err) => {
+      })
+  }
+
+  function prevPage() {
+    axios.get(previousPoke)
+      .then((data) => {
+        console.log("data: ", data.data)
+        const { results, next, previous } = data.data
+        setData(results)
+        setNextPoke(next)
+        setPreviousPoke(previous)
+      }).catch((err) => {
+      })
+  }
+
   return (
-    <Layout>
+    <Layout overflow='auto'>
+      <h1 className='text-lg uppercase font-bold text-black text-center pt-5'>List Pokemon</h1>
       <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6'>
         {
           data.map((data) => (
@@ -49,26 +76,15 @@ const Home = () => {
         }
       </div>
       <div className="flex w-full mb-5 ">
-        <div className='flex w-full justify-start'>
-          <AiFillCaretLeft size={35}/>
-          <button
-            className="btn ml-5"
-          // onClick={() => prevPage()}
-          // disabled={page === 1}
-          >
-            «
-          </button>
+        <div className='flex w-full justify-start ml-6 text-base-100'>
+          <AiFillCaretLeft size={35}
+            onClick={() => prevPage()}
+          />
         </div>
-        {/* <button className="btn">{page}</button> */}
-        <div className='flex w-full justify-end'>
-        <AiFillCaretRight size={35}/>
-          <button
-            className="btn mr-5"
-          // onClick={() => nextPage()}
-          // disabled={page === totalPage}
-          >
-            »
-          </button>
+        <div className='flex w-full justify-end mr-6 text-base-100'>
+          <AiFillCaretRight size={35}
+            onClick={() => nextPage()}
+          />
         </div>
       </div>
     </Layout>
