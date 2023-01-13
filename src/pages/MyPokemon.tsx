@@ -72,7 +72,7 @@ const MyPokemon = () => {
                                     data.url
                                 )}
                             >
-                                <div className='w-full p-2 flex justify-end text-black' onClick={() => removeFavMovie(data)}>
+                                <div className='w-full p-3 flex justify-end text-black' onClick={() => removeFavMovie(data)}>
                                     <GiCancel size={30} />
                                 </div>
                             </Card>
