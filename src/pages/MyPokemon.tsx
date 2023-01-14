@@ -57,30 +57,33 @@ const MyPokemon = () => {
 
     return (
         <Layout overflow='auto'>
-            <h1 className='text-lg uppercase font-bold text-black dark:text-white text-center pt-5'>My Pokemon</h1>
-            <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6 '>
-                {
-                    datas.map((data) => (
+            <div className='h-screen overflow-auto'>
+                <h1 className='text-lg uppercase font-bold text-black dark:text-white text-center pt-5'>My Pokemon</h1>
+                <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6 '>
+                    {
+                        datas.map((data) => (
 
-                        <Card
-                            onClick={() => detailHandler(data.id, data.name)}
-                            name={data.name}
-                            img={data.id ? (
-                                `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id + ".svg"}`
-                            ) : (
-                                data.url
-                            )}
-                        >
-                            <div className='w-full p-3 flex justify-end text-black dark:text-white ' onClick={() => removeFavMovie(data)}>
-                                <div className='btn btn-ghost'>
-                                    <GiCancel size={30} />
+                            <Card
+                                onClick={() => detailHandler(data.id, data.name)}
+                                name={data.name}
+                                img={data.id ? (
+                                    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id + ".svg"}`
+                                ) : (
+                                    data.url
+                                )}
+                            >
+                                <div className='w-full p-3 flex justify-end text-black dark:text-white ' onClick={() => removeFavMovie(data)}>
+                                    <div className='btn btn-ghost'>
+                                        <GiCancel size={30} />
+                                    </div>
                                 </div>
-                            </div>
-                        </Card>
+                            </Card>
 
-                    ))
-                }
+                        ))
+                    }
+                </div>
             </div>
+
         </Layout>
     )
 }
