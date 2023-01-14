@@ -4,15 +4,15 @@ import { Link } from 'react-router-dom'
 
 const Footer = () => {
     return (
-        <footer className="btm-nav flex justify-center w-full sticky bottom-0 z-50">
+        <footer className="btm-nav flex justify-center w-full sticky bottom-0 z-50 bg-black">
             <button>
                 <Link to={'/'}>
-                    <TbHome size={30} />
+                    <TbHome size={30} color='white' />
                 </Link>
             </button>
             <button>
                 <Link to={'/mypokemon'}>
-                    <TbPokeball size={30} />
+                    <TbPokeball size={30} color='white'/>
                 </Link>
             </button>
         </footer>

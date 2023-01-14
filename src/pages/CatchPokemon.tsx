@@ -44,7 +44,7 @@ const CatchPokemon = () => {
                 icon: "error",
                 title: "Oops...",
                 text: "Try Again",
-              })
+            })
         } else {
             handleMyPoke(data)
         }
@@ -62,7 +62,7 @@ const CatchPokemon = () => {
                 text: "Pokemon added to MyPokemon",
                 showConfirmButton: false,
                 timer: 2000,
-              })
+            })
         } else {
             localStorage.setItem("MyPokemon", JSON.stringify([data]));
             Swal.fire({
@@ -71,7 +71,7 @@ const CatchPokemon = () => {
                 text: "Pokemon added to MyPokemon",
                 showConfirmButton: false,
                 timer: 2000,
-              })
+            })
         }
     }
 
@@ -84,7 +84,7 @@ const CatchPokemon = () => {
                 <div className='flex justify-center w-full my-5'>
                     <CardDetail>
                         <div className='w-full h-14 flex items-center'>
-                            <h1 className='text-lg capitalize font-bold text-black'>{`wild ${name_pokemon} appear`}</h1>
+                            <h1 className='text-lg capitalize font-bold text-black dark:text-white'>{`wild ${name_pokemon} appear`}</h1>
                         </div>
                     </CardDetail>
                 </div>
@@ -93,15 +93,15 @@ const CatchPokemon = () => {
                 </div>
                 <div className='grid auto-rows-max grid-cols-2 place-self-end'>
                     <CardDetail>
-                        <h1 className='text-md md:text-lg font-bold text-black '>What will <br /> You do?</h1>
+                        <h1 className='text-md md:text-lg font-bold text-black dark:text-white'>What will <br /> You do?</h1>
                     </CardDetail>
                     <CardDetail>
                         <div className='grid auto-rows-max grid-cols-2 place-items-center'>
                             <div className='my-4' onClick={() => catchPoke(randomNumber())}>
-                                <p className='uppercase text-black text-xs md:text-md lg:text-lg font-bold'>catch!</p>
+                                <p className='uppercase text-black dark:text-white text-xs md:text-md lg:text-lg font-bold'>catch!</p>
                             </div>
                             <div className='my-4' onClick={() => navigate(-1)}>
-                                <p className='uppercase text-black text-xs md:text-md lg:text-lg font-bold'>run</p>
+                                <p className='uppercase text-black dark:text-white text-xs md:text-md lg:text-lg font-bold'>run</p>
                             </div>
                         </div>
                     </CardDetail>

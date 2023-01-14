@@ -53,7 +53,7 @@ const DetailsPokemon = () => {
     return (
         <Layout overflow='auto'>
             <div className='flex justify-center w-full mt-8'>
-                <h1 className='uppercase font-bold text-xl md:text-2xl text-black'>{name_pokemon}</h1>
+                <h1 className='uppercase font-bold text-xl md:text-2xl text-black dark:text-white'>{name_pokemon}</h1>
             </div>
             <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6'>
                 <Card
@@ -62,21 +62,21 @@ const DetailsPokemon = () => {
                     <div className='grid grid-flow-row auto-rows-max grid-cols-1 m-5 gap-3 md:grid-cols-2'>
                         {
                             data.map((data) => (
-                                <div className='rounded-lg border-4 border-black'>
-                                    <p className='bg-white rounded-lg text-center text-black capitalize text-xs md:text-md lg:text-lg font-bold'>{data.type.name}</p>
+                                <div className='rounded-lg border-4 border-black dark:border-white'>
+                                    <p className='bg-white dark:bg-base-100 rounded-lg text-center text-black dark:text-white capitalize text-xs md:text-md lg:text-lg font-bold'>{data.type.name}</p>
                                 </div>
                             ))
                         }
                     </div>
                 </Card>
                 <CardDetail>
-                    <h1 className='text-lg uppercase font-bold text-black'>Pokemon Stats</h1>
+                    <h1 className='text-lg uppercase font-bold text-black dark:text-white'>Pokemon Stats</h1>
                     {
                         baseStat.map((data) => (
                             <div className='mb-5'>
-                                <p className="text-left text-black text-xs md:text-md lg:text-lg font-semibold capitalize">{data.stat.name}</p>
-                                <div className='h-1 w-full bg-gray-300'>
-                                    <div className="h-1 bg-blue-500 text-black text-xs md:text-md lg:text-lg font-semibold" style={{ width: `${data.base_stat >= 100 ? ("100") : (data.base_stat)}%` }}>{data.base_stat}</div>
+                                <p className="text-left text-black dark:text-white text-xs md:text-md lg:text-lg font-semibold capitalize">{data.stat.name}</p>
+                                <div className='h-1 w-full bg-gray-300 dark:bg-white'>
+                                    <div className="h-1 bg-blue-500 text-black dark:text-white text-xs md:text-md lg:text-lg font-semibold" style={{ width: `${data.base_stat >= 100 ? ("100") : (data.base_stat)}%` }}>{data.base_stat}</div>
                                 </div>
                             </div>
                         ))
@@ -86,29 +86,29 @@ const DetailsPokemon = () => {
             <div className='mx-5'>
                 <CardDetail>
                     <div className=''>
-                        <h1 className='text-lg uppercase font-bold text-black'>Profile</h1>
-                        <p className="text-left text-black text-xs md:text-md lg:text-lg capitalize ">Name: {namePoke}</p>
-                        <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">Weight: {weight}</p>
-                        <p className="text-left text-black text-xs md:text-md lg:text-lg normal-case ">Height: {height}</p>
+                        <h1 className='text-lg uppercase font-bold text-black dark:text-white'>Profile</h1>
+                        <p className="text-left text-black dark:text-white text-xs md:text-md lg:text-lg capitalize ">Name: {namePoke}</p>
+                        <p className="text-left text-black dark:text-white text-xs md:text-md lg:text-lg normal-case ">Weight: {weight}</p>
+                        <p className="text-left text-black dark:text-white text-xs md:text-md lg:text-lg normal-case ">Height: {height}</p>
                     </div>
                 </CardDetail>
             </div>
             <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6'>
                 <CardDetail>
-                    <h1 className='text-lg uppercase font-bold text-black'>Abilities</h1>
+                    <h1 className='text-lg uppercase font-bold text-black dark:text-white'>Abilities</h1>
                     {
                         abilities.map((data) => (
                             <div className=''>
-                                <p className='capitalize text-xs md:text-md lg:text-lg text-black'>{data.ability.name}</p>
+                                <p className='capitalize text-xs md:text-md lg:text-lg text-black dark:text-white'>{data.ability.name}</p>
                             </div>
                         ))
                     }
                 </CardDetail>
                 <CardDetail>
-                    <h1 className='text-lg uppercase font-bold text-black'>Moves</h1>
+                    <h1 className='text-lg uppercase font-bold text-black dark:text-white'>Moves</h1>
                     {
                         moves.slice(0, 4).map((data) => (
-                            <p className='capitalize text-xs md:text-md lg:text-lg text-black'>{data.move.name}</p>
+                            <p className='capitalize text-xs md:text-md lg:text-lg text-black dark:text-white'>{data.move.name}</p>
                         ))
                     }
                 </CardDetail>
@@ -116,7 +116,7 @@ const DetailsPokemon = () => {
             <div className='w-full flex justify-center mb-10'>
                 <Button
                     label='Catch!'
-                    className='text-white'
+                    className='text-white dark:text-black dark:bg-white font-bold hover:scale-x-110 hover:shadow-black hover:shadow-md dark:hover:shadow-white dark:hover:shadow-md'
                     onClick={() => catchHandler(namePoke)}
                 />
             </div>

@@ -30,13 +30,8 @@ const MyPokemon = () => {
         navigate(`/detail/${id}/${name}`)
     }
     function removeFavMovie(data: DataType) {
-        let dupeDatas: DataType[] = datas.slice()
-        const filterData = dupeDatas.filter((item) => item.id !== data.id)
-        localStorage.setItem("MyPokemon", JSON.stringify(filterData))
-        // alert(`Delete ${data.name} from favorite list`);
         Swal.fire({
             title: `Are you sure want to delete ${data.name}?`,
-            // text: "You won't be able to revert this!",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -52,33 +47,39 @@ const MyPokemon = () => {
                     showConfirmButton: false,
                     timer: 1500,
                 });
+                let dupeDatas: DataType[] = datas.slice()
+                const filterData = dupeDatas.filter((item) => item.id !== data.id)
+                localStorage.setItem("MyPokemon", JSON.stringify(filterData))
             }
             navigate(0)
         })
     }
+
     return (
         <Layout overflow='auto'>
-            <div className='h-screen overflow-auto'>
-                <h1 className='text-lg uppercase font-bold text-black text-center pt-5'>My Pokemon</h1>
-                <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6 '>
-                    {
-                        datas.map((data) => (
-                            <Card
-                                onClick={() => detailHandler(data.id, data.name)}
-                                name={data.name}
-                                img={data.id ? (
-                                    `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id + ".svg"}`
-                                ) : (
-                                    data.url
-                                )}
-                            >
-                                <div className='w-full p-3 flex justify-end text-black' onClick={() => removeFavMovie(data)}>
+            <h1 className='text-lg uppercase font-bold text-black dark:text-white text-center pt-5'>My Pokemon</h1>
+            <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6 '>
+                {
+                    datas.map((data) => (
+
+                        <Card
+                            onClick={() => detailHandler(data.id, data.name)}
+                            name={data.name}
+                            img={data.id ? (
+                                `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.id + ".svg"}`
+                            ) : (
+                                data.url
+                            )}
+                        >
+                            <div className='w-full p-3 flex justify-end text-black dark:text-white ' onClick={() => removeFavMovie(data)}>
+                                <div className='btn btn-ghost'>
                                     <GiCancel size={30} />
                                 </div>
-                            </Card>
-                        ))
-                    }
-                </div>
+                            </div>
+                        </Card>
+
+                    ))
+                }
             </div>
         </Layout>
     )

@@ -60,34 +60,32 @@ const Home = () => {
 
   return (
     <Layout overflow='auto'>
-      <div className='h-screen overflow-auto'>
-        <h1 className='text-lg uppercase font-bold text-black text-center pt-5'>List Pokemon</h1>
-        <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6'>
-          {
-            data.map((data) => (
-              <Card
-                onClick={() => detailHandler(data.url.slice(34).replace("/", ""), data.name)}
-                name={data.name}
-                img={data.url ? (
-                  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.url.slice(34).replace("/", ".svg")}`
-                ) : (
-                  data.url
-                )}
-              />
-            ))
-          }
+      <h1 className='text-lg uppercase font-bold text-black dark:text-white text-center pt-5'>List Pokemon</h1>
+      <div className='grid grid-flow-row auto-rows-max grid-cols-2 p-6'>
+        {
+          data.map((data) => (
+            <Card
+              onClick={() => detailHandler(data.url.slice(34).replace("/", ""), data.name)}
+              name={data.name}
+              img={data.url ? (
+                `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${data.url.slice(34).replace("/", ".svg")}`
+              ) : (
+                data.url
+              )}
+            />
+          ))
+        }
+      </div>
+      <div className="flex w-full mb-5 ">
+        <div className='flex w-full justify-start ml-6 text-base-100 dark:text-white'>
+          <AiFillCaretLeft size={35}
+            onClick={() => prevPage()}
+          />
         </div>
-        <div className="flex w-full mb-5 ">
-          <div className='flex w-full justify-start ml-6 text-base-100'>
-            <AiFillCaretLeft size={35}
-              onClick={() => prevPage()}
-            />
-          </div>
-          <div className='flex w-full justify-end mr-6 text-base-100'>
-            <AiFillCaretRight size={35}
-              onClick={() => nextPage()}
-            />
-          </div>
+        <div className='flex w-full justify-end mr-6 text-base-100 dark:text-white'>
+          <AiFillCaretRight size={35}
+            onClick={() => nextPage()}
+          />
         </div>
       </div>
     </Layout>

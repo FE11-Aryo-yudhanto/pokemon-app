@@ -10,13 +10,13 @@ interface CardProps {
 }
 const Card: FC<CardProps> = ({ name, img, key, onClick, children, children2 }) => {
     return (
-        <div className="card card-compact bg-white shadow-lg shadow-black border-4 border-black m-2" key={key} >
+        <div className="card card-compact bg-white dark:bg-base-100 shadow-lg shadow-black dark:shadow-white border-4 border-black dark:border-white m-2" key={key} >
             {children}
             <figure className='w-full h-full p-5'onClick={onClick}>
                 <img className='h-full' src={img} alt={name} />
             </figure>
             <div className="card-body">
-                <p className="text-center text-black text-xs md:text-md lg:text-lg uppercase font-bold" onClick={onClick}>{name}</p>
+                <p className="text-center text-black dark:text-white text-xs md:text-md lg:text-lg uppercase font-bold" onClick={onClick}>{name}</p>
             </div>
             {children2}
         </div>
